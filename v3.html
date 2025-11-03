@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peptide Calculator</title>
+    <style>
+        /* --- Base64 Embedded Images --- */
+        :root {
+            --img-syringe-03: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAAAYCAYAAAAl5/uFAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAAlNJREFUaEPtmk9Kw0AUhc+Mio2gWAWu3IILN+IOvIVLty6EiFAhQvAWeA+8tUv3/oOifUeFYoPYIbvYjGnyYybZJLvJ7Scd3iTz5cvNbw4A+5aGv+7s/p1jY99g9xOeyYy1nN07T5unOwc7JxsnOyc7JzsnO6+bX9O82T0d2T0d2T3vWdv78O/A+g22b3a+zzY2tp5vdp+PfWc77bO5gcE+Yvob3Lh3+Nzx8ePaO1bHqB+t1/1o/Xz0O/n1e9z/2Ww/b3A/yFpE9p8HNu/S863W83nO8/n1vX7R9P2S1q8pYnsG5NuaJtF8Yf2bC9Trf0f1P9T/tP+J/tP+Ffs/1Z/4PzUnP5w/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+Y/V0/g/Nf65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/mP1d/zP4/P4d/1H/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/1D9nfsz+Pz+Pz+Pfz7/eP7x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP9y/bL9s/sz+Pz+Pz+P/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/7L9s/sz+Pz+P/3/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/y/7L5s/2y/bP9s/2z/bP9s/2z/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2z/bP9s/2z/bP9s/7H787G9vL/9u9l9f9i93P69b/sH+58f7C/zfZj1A/23+r/b+j/c+v9483LzcvN28P27+rP1Y/Xv48/br7+vHz8vPy8/rL6+vLy8vDy+fPy+vHy+PD58/D48uHz48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48uXX/f/3w8/3v4/m/4+P3/2H2+v/09b3sPz8sPGw8bDxsPGw8bDxsPGw+vj8+fH58/Pz9/fl9/fr/dfn6/3X1++P58/P/6+f/2+fvv8/fP5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fP7/3f8/27+rP7M/sz+zP7M/sz+zP7M/s4+37zefFz8XDwffz3/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eTry/m/5fnX86/nz8+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vX84/HP+7/nZ+T47Pz8c/3r+8f7n+9fPz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/Pz8/PAdjustY+fn4/Pr++f34+fr+9vn/9vv/+f3/BvsHhM3j088AAAAASUVORK5CYII=');
+            --img-syringe-05: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIIAAAAYCAYAAABSRRTSAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAApxJREFUaEPtmk9Kw0AUhc+Mio2gWAWu3IILN+IOvIVLty6EiFAhQvAWeA+8tUv3/oOifUeFYoPYIbvYjGnyYybZJLvJ7Scd3iTz5cvNbw4A+5aGv+7s/p1jY99g9xOeyYy1nN07T5unOwc7JxsnOyc7JzsnO6+bX9O82T0d2T0d2T3vWdv78O/A+g22b3a+zzY2tp5vdp+PfWc77bO5gcE+Yvob3Lh3+Nzx8ePaO1bHqB+t1/1o/Xz0O/n1e9z/2Ww/b3A/yFpE9p8HNu/S863W83nO8/n1vX7R9P2S1q8pYnsG5NuaJtF8Yf2bC9Trf0f1P9T/tP+J/tP+Ffs/1Z/4PzUnP5w/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+Y/V0/g/Nf65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/mP1d/zP4/P4d/1H/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/1D9nfsz+Pz+Pz+Pfz7/eP7x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP9y/bL9s/sz+Pz+Pz+P/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/7L9s/sz+Pz+P/3/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/y/7L5s/2y/bP9s/2z/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2z/bP9s/2z/bP9s/7H787G9vL/9u9l9f9i93P69b/sH+58f7C/zfZj1A/23+r/b+j/c+v9483LzcvN28P27+rP1Y/Xv48/br7+vHz8vPy8/rL6+vLy8vDy+fPy+vHy+PD58/D48uHz48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48uXX/f/3w8/3v4/m/4+P3/2H2+v/09b3sPz8sPGw8bDxsPGw8bDxsPGw+vj8+fH58/Pz9/fl9/fr/dfn6/3X1++P58/P/6+f/2+fvv8/fP5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fP7/3f8/27+rP7M/sz+zP7M/sz+zP7M/s4+37zefFz8XDwffz3/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eTry/m/5fnX86/nz8+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6aSjC+/v7+Pz6/vn9+Pn6/vb5//b7//n9/wX7B4TN49PPAAAAABJRU5ErkJggg==');
+            --img-syringe-10: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOYAAAAYCAYAAADN3rGgAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAApxJREFUaEPtmk9Kw0AUhc+Mio2gWAWu3IILN+IOvIVLty6EiFAhQvAWeA+8tUv3/oOifUeFYoPYIbvYjGnyYybZJLvJ7Scd3iTz5cvNbw4A+5aGv+7s/p1jY99g9xOeyYy1nN07T5unOwc7JxsnOyc7JzsnO6+bX9O82T0d2T0d2T3vWdv78O/A+g22b3a+zzY2tp5vdp+PfWc77bO5gcE+Yvob3Lh3+Nzx8ePaO1bHqB+t1/1o/Xz0O/n1e9z/2Ww/b3A/yFpE9p8HNu/S863W83nO8/n1vX7R9P2S1q8pYnsG5NuaJtF8Yf2bC9Trf0f1P9T/tP+J/tP+Ffs/1Z/4PzUnP5w/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+4/Ln+Y/V0/g/Nf65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/uP65/mP1d/zP4/P4d/1H/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/0P/Q/9D/1D9nfsz+Pz+Pz+Pfz7/eP7x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP5x/OP9y/bL9s/sz+Pz+Pz+P/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/8X/1/7L9s/sz+Pz+P/3/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/z/8//P/y/7L5s/2y/bP9s/2z/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2y/bP9s/2z/bP9s/7H787G9vL/9u9l9f9i93P69b/sH+58f7C/zfZj1A/23+r/b+j/c+v9483LzcvN28P27+rP1Y/Xv48/br7+vHz8vPy8/rL6+vLy8vDy+fPy+vHy+PD58/D48uHz48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48unD48uXX/f/3w8/3v4/m/4+P3/2H2+v/09b3sPz8sPGw8bDxsPGw8bDxsPGw+vj8+fH58/Pz9/fl9/fr/dfn6/3X1++P58/P/6+f/2+fvv8/fP5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fv38/fv5+/fz9+/n79/P37+fP7/3f8/27+rP7M/sz+zP7M/sz+zP7M/s4+37zefFz8XDwffz3/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/eP/y/Try/m/5fnX86/nz8+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+fr5+vn6+aSjC+/v7+Pz6/vn9+Pn6/vb5//b7//n9/wX7B4TN49PPAAAAABJRU5ErkJggg==');
+            --img-vial-peptide: url('data:image/png;base64,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');
+            --img-vial-water: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAmCAYAAABaQYYBAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAApxJREFUWEedlr9rE0EUxz8zGxJjISkWiYVgkWKxkGBt/A+CVYwWEsVGQdCStBBsFCwstLHQWiRYKHYWKxaQtYVgEQsRkwYhYmKyy+7uZvfm24/FNnPvDcz8fTO/eTO/AOBvKuh9PNF7tNDjFpqfNHVpMv0YVqfB8+j+/o48fHryw8MjfHw84eHhiL+/Pzw8PFBVVYWenp7o6ekhPz+fyspKPD09ob+/nyNHjuDo6AiJiYlYXFygrq6O9vZ2LC0tYWlpCR8fHzgcDtavX4+NjQ0sLy9jbGyMzMxMLC0tYWxsjNXVVWRkZGBkZERFRUUSEhK4fPlyBAYG4uDggKKiIrq7u1lYWMDKygobGxu4ubkBAwOD4+Pjvb+/j1AoxMnJSV1dXWxtbaGlpQUymQxvb2+4ublhaWkJEhISkJeXh5eXF/Lz87G3t0dNTQ3e3t4kJibCxcVFQ0MDf39/AEwmE1dXV+Tn5yMrKwu3t7cYGBggIiICYWFhGBoa4uTkBGdnZ5ycnODp6QlHR0eEhISgtbUVSUlJeHp6AgCTyYSiogKenp7IzMxEUVEReXl5UFBSUlKys7O5ubnBxsYGbW1tAEpKStDb24usrCxKS0sZGRmhoqKCm5sbnJyc4O/vj6KiIiIjIzE1NYW9vT0ymQyJiYmIjIyEi4sLZmdnUVBQgJ+fH0JDQxEdHY2rqyuysrKwtrZGd3c3qqqqyMnJwcLCAkNDQ3R1daGurg4cx4HE43GMjIzg6uoKAMDf35/4+PhWrlzJZDLNzMzk5uaWmZlJXV0djY2NQkJCZGVlkZCQgLOzMwAgyzJ0XUdxcdHhcJiamqK2thaA2trabGxsEAgEEhMTUavVlJaW4uPjg06nk5eXx8nJCScnJ3R1dXF0dER3dzenp6cUCkVKSoqPjw/c3d25u7vD3d2dpaUleXl5jIyMaGpqotfr4XQ68fX1paOjQ2JiIjY2NhQVFdHR0QHArVu3Mjc3p7W1FclkstfrSUlJ4ebmJtPpDA4OdnBwoLa2lpubG/v7+/j4+FBcXMyrr43J0/x/jP/qD4ZOMvS08L0JAAAAAElFTkSuQmCC');
+        }
+
+
+        /* --- Basic Setup --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fbfcfe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- Calculator Container --- */
+        .peptide-calculator {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.07);
+            width: 100%;
+            max-width: 800px; /* Slightly wider */
+            padding: 35px 50px;
+            border: 1px solid #f0f0f0;
+        }
+
+        /* --- Header --- */
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .calculator-header h1 {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 600;
+            color: #663399; /* Exact purple from image */
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        .calculator-header .divider {
+            width: 50px;
+            height: 3px;
+            background-color: #e0e0e0;
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Form Styling --- */
+        #peptideForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2-column layout */
+            gap: 30px 40px; /* row-gap column-gap */
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* Make syringe group span both columns */
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group legend {
+            font-size: 1.0rem; /* 16px */
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        /* --- Legend Icons --- */
+        .legend-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+        
+        .legend-icon.vial-peptide {
+            transform: scale(0.8);
+        }
+         .legend-icon.vial-water {
+            transform: scale(0.9);
+        }
+
+        /* --- Radio Button Styling (to look like buttons) --- */
+        .option-group input[type="radio"] {
+            display: none; /* Hide the actual radio button */
+        }
+
+        .option-group label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease-in-out;
+            background-color: #fdfdfd;
+            color: #4a4a4a;
+            user-select: none;
+            line-height: 1.5;
+        }
+        
+        .option-group label:hover {
+            border-color: #aaaaaa;
+            background-color: #f8f8f8;
+        }
+
+        /* Style for the syringe options */
+        .syringe-option {
+            gap: 12px;
+            padding: 12px 18px;
+            flex: 1; /* Make them grow to fill space */
+            min-width: 150px;
+        }
+        .syringe-option img {
+            height: 24px;
+        }
+
+        /* --- Selected State --- */
+        .option-group input[type="radio"]:checked + label {
+            background-color: #e6f7ff; /* Light blue from image */
+            border-color: #007bff;
+            color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+            font-weight: 600;
+        }
+
+        /* --- "Other" Input Field --- */
+        .other-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            transition: all 0.2s ease-in-out;
+            background-color: #fdfdfd;
+            overflow: hidden; /* To keep radius nice */
+        }
+        
+        .other-input-wrapper label {
+            border: none;
+            border-radius: 8px 0 0 8px;
+            background-color: transparent;
+        }
+        
+        .other-input-wrapper:has(.other-input:disabled) label {
+            background-color: #fdfdfd;
+            color: #4a4a4a;
+        }
+        
+        .other-input-wrapper:has(.other-input:not(:disabled)) {
+             background-color: #e6f7ff;
+             border-color: #007bff;
+             box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+        }
+        
+        .other-input-wrapper:has(.other-input:not(:disabled)) label {
+            color: #0056b3;
+            font-weight: 600;
+            background-color: transparent;
+        }
+
+        .other-input {
+            width: 75px;
+            padding: 10px;
+            border: none;
+            border-left: 1px solid #dcdcdc;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: #fff;
+            border-radius: 0 8px 8px 0;
+            outline: none;
+        }
+        .other-input:disabled {
+            background-color: #f5f5f5;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+        .other-input-wrapper:has(.other-input:not(:disabled)) .other-input {
+            border-left-color: #b3dfff;
+            background-color: #fff;
+        }
+        .other-input:focus {
+            background-color: #fff;
+            border-left-color: #007bff;
+        }
+        
+        /* Hide radio button for "Other" */
+        #vial_other_radio,
+        #water_other_radio,
+        #dose_other_radio {
+            display: none;
+        }
+
+        /* --- Result Area --- */
+        .calculator-result {
+            background-color: #f5f7fa;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-top: 10px;
+        }
+
+        .result-text {
+            font-size: 1.15rem;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .result-text span {
+            color: #007bff;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* --- Ruler Visual --- */
+        .ruler-container {
+            padding: 0 5px; /* Small padding */
+        }
+        
+        .ruler {
+            position: relative;
+            width: 100%;
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            /* Using gradient for all ticks */
+            background-image: repeating-linear-gradient(
+                to right,
+                #ced4da, /* Tick color */
+                #ced4da 2px,
+                transparent 2px,
+                transparent 3.333% /* 100% / 30 ticks */
+            );
+        }
+
+        .ruler-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0; /* Will be set by JS */
+            background-color: #007bff;
+            border-radius: 6px 0 0 6px;
+            transition: width 0.3s ease-out;
+            /* When progress is 100%, round all corners */
+            overflow: hidden; 
+        }
+        
+        .ruler-progress[style*="width: 100%"] {
+             border-radius: 6px;
+        }
+
+        .ruler-ticks {
+            position: relative;
+            top: 5px;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding-left: 16.66%; /* 100% / 6 = space for 5 ticks */
+        }
+        
+        .ruler-ticks span {
+            position: relative;
+            display: inline-block;
+            padding-top: 5px;
+            /* Align labels to be centered on their tick */
+            transform: translateX(-50%); 
+        }
+        
+        /* The long tick mark line */
+        .ruler-ticks span::before {
+            content: '';
+            position: absolute;
+            top: -10px; /* Moves it up to overlap the ruler */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 8px; /* Taller tick */
+            background-color: #adb5bd;
+        }
+
+        /* --- Image Styling --- */
+        .syringe-option img {
+            content: var(--img-syringe-03);
+            height: 24px;
+        }
+        #syringe_03 + label img { content: var(--img-syringe-03); }
+        #syringe_05 + label img { content: var(--img-syringe-05); }
+        #syringe_10 + label img { content: var(--img-syringe-10); }
+        
+        .legend-icon.vial-peptide { content: var(--img-vial-peptide); }
+        .legend-icon.vial-water { content: var(--img-vial-water); }
+        
+    </style>
+</head>
+<body>
+
+    <div class="peptide-calculator">
+        <div class="calculator-header">
+            <h1>PEPTIDE CALCULATOR</h1>
+            <div class="divider"></div>
+        </div>
+
+        <form id="peptideForm">
+            <fieldset class="form-group form-group-full">
+                <legend>What is the total volume of your syringe?</legend>
+                <div class="option-group">
+                    <input type="radio" id="syringe_03" name="syringe_volume" value="0.3" checked>
+                    <label for="syringe_03" class="syringe-option">
+                        <img> 0.3 ml
+                    </label>
+                    
+                    <input type="radio" id="syringe_05" name="syringe_volume" value="0.5">
+                    <label for="syringe_05" class="syringe-option">
+                        <img> 0.5 ml
+                    </label>
+
+                    <input type="radio" id="syringe_10" name="syringe_volume" value="1.0">
+                    <label for="syringe_10" class="syringe-option">
+                        <img> 1.0 ml
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend><span class="legend-icon vial-peptide"></span>Select Peptide Vial Quantity</legend>
+                <div class="option-group">
+                    <input type="radio" id="vial_5" name="vial_quantity" value="5" checked>
+                    <label for="vial_5">5 mg</label>
+                    
+                    <input type="radio" id="vial_10" name="vial_quantity" value="10">
+                    <label for="vial_10">10 mg</label>
+                    
+                    <input type="radio" id="vial_15" name="vial_quantity" value="15">
+                    <label for="vial_15">15 mg</label>
+                    
+                    <div class="other-input-wrapper">
+                        <input type="radio" id="vial_other_radio" name="vial_quantity" value="other">
+                        <label for="vial_other_radio">Other</label>
+                        <input type="number" id="vial_other_input" class="other-input" min="0" step="any" placeholder="mg" disabled>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <legend><span class="legend-icon vial-water"></span>How much bacteriostatic water are you adding?</legend>
+                <div class="option-group">
+                    <input type="radio" id="water_1" name="water_quantity" value="1" checked>
+                    <label for="water_1">1 ml</label>
+
+                    <input type="radio" id="water_2" name="water_quantity" value="2">
+                    <label for="water_2">2 ml</label>
+
+                    <input type="radio" id="water_3" name="water_quantity" value="3">
+                    <label for="water_3">3 ml</label>
+
+                    <input type="radio" id="water_5" name="water_quantity" value="5">
+                    <label for="water_5">5 ml</label>
+                    
+                    <div class="other-input-wrapper">
+                        <input type="radio" id="water_other_radio" name="water_quantity" value="other">
+                        <label for="water_other_radio">Other</label>
+                        <input type="number" id="water_other_input" class="other-input" min="0" step="any" placeholder="ml" disabled>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group form-group-full">
+                <legend>How much of the Peptide do you want in each dose?</legend>
+                <div class="option-group">
+                    <input type="radio" id="dose_50" name="dose_quantity" value="50" checked>
+                    <label for="dose_50">50 mcg</label>
+
+                    <input type="radio" id="dose_100" name="dose_quantity" value="100">
+                    <label for="dose_100">100 mcg</label>
+
+                    <input type="radio" id="dose_250" name="dose_quantity" value="250">
+                    <label for="dose_250">250 mcg</label>
+
+                    <input type="radio" id="dose_500" name="dose_quantity" value="500">
+                    <label for="dose_500">500 mcg</label>
+                    
+                    <div class="other-input-wrapper">
+                        <input type="radio" id="dose_other_radio" name="dose_quantity" value="other">
+                        <label for="dose_other_radio">Other</label>
+                        <input type="number" id="dose_other_input" class="other-input" min="0" step="any" placeholder="mcg" disabled>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div class="calculator-result">
+            <div class="result-text">
+                To have a dose of <span id="resultDose">50</span> mcg pull the syringe to <span id="resultUnits">1</span>
+            </div>
+            <div class="ruler-container">
+                <div class="ruler">
+                    <div class="ruler-progress" id="rulerProgress"></div>
+                </div>
+                <div class="ruler-ticks" id="rulerTicks">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('peptideForm');
+            
+            // Result elements
+            const resultDoseEl = document.getElementById('resultDose');
+            const resultUnitsEl = document.getElementById('resultUnits');
+            const rulerProgress = document.getElementById('rulerProgress');
+            const rulerTicks = document.getElementById('rulerTicks');
+
+            // --- Helper function to get value from a radio group ---
+            function getRadioValue(groupName, otherInputId) {
+                const radio = form.querySelector(`input[name="${groupName}"]:checked`);
+                if (!radio) return 0;
+                
+                let value = radio.value;
+                if (value === 'other') {
+                    const otherInput = document.getElementById(otherInputId);
+                    return parseFloat(otherInput.value) || 0;
+                }
+                return parseFloat(value);
+            }
+
+            // --- Helper function to update ruler ticks ---
+            function updateRuler(syringeVol, units) {
+                let maxUnits = 30; // Default for 0.3ml
+                let tickIncrements = [5, 10, 15, 20, 25, 30];
+
+                if (syringeVol === 0.5) {
+                    maxUnits = 50;
+                    tickIncrements = [10, 20, 30, 40, 50];
+                } else if (syringeVol === 1.0) {
+                    maxUnits = 100;
+                    tickIncrements = [20, 40, 60, 80, 100];
+                }
+
+                // Update ticks
+                rulerTicks.innerHTML = tickIncrements.map(tick => `<span>${tick}</span>`).join('');
+                
+                // Adjust tick container padding based on first increment
+                rulerTicks.style.paddingLeft = `${(tickIncrements[0] / maxUnits) * 100}%`;
+
+                // Update progress bar
+                let percentage = (units / maxUnits) * 100;
+                if (percentage > 100) percentage = 100;
+                if (percentage < 0) percentage = 0;
+                
+                rulerProgress.style.width = percentage + '%';
+            }
+
+            // --- Main Calculation Function ---
+            function calculate() {
+                // 1. Get all input values
+                const syringeVol = getRadioValue('syringe_volume');
+                const vial_mg = getRadioValue('vial_quantity', 'vial_other_input');
+                const water_ml = getRadioValue('water_quantity', 'water_other_input');
+                const dose_mcg = getRadioValue('dose_quantity', 'dose_other_input');
+
+                // 2. Perform calculation
+                // concentration (mcg/ml) = (vial_mg * 1000) / water_ml
+                // volume_needed (ml) = dose_mcg / concentration
+                // units = volume_needed (ml) * (100 units / 1 ml) --- (Assuming 1ml = 100 units)
+                // OR (30 units / 0.3ml)
+                // OR (50 units / 0.5ml)
+                
+                // Let's get units per ml based on syringe
+                let unitsPerMl = 100; // Default for 1.0ml
+                if (syringeVol === 0.3) unitsPerMl = 100; // (30 units / 0.3ml) -> This is wrong. 0.3ml is 30 units. 1ml is 100 units.
+                if (syringeVol === 0.5) unitsPerMl = 100; // (50 units / 0.5ml)
+                
+                // The standard is 100 units = 1 mL (like an insulin syringe)
+                // Let's re-verify the formula from the last code, which worked.
+                // units = (dose_mcg * water_ml) / (vial_mg * 10)
+                // This formula assumes 100 units per mL.
+                // e.g. (50mcg * 1ml) / (5mg * 10) = 50 / 50 = 1 unit.
+                // 1 unit = 0.01ml.
+                // Concentration = (5 * 1000) / 1 = 5000 mcg/ml
+                // Volume needed = 50mcg / 5000mcg/ml = 0.01 ml
+                // 0.01 ml = 1 unit.
+                // This logic is correct.
+                
+                let units = 0;
+                if (vial_mg > 0 && water_ml > 0) {
+                     units = (dose_mcg * water_ml) / (vial_mg * 10);
+                }
+
+                // 3. Update the result text
+                resultDoseEl.textContent = dose_mcg.toLocaleString();
+                
+                let unitsText = units.toFixed(1);
+                if (unitsText.endsWith('.0')) {
+                    unitsText = units.toFixed(0);
+                }
+                resultUnitsEl.textContent = unitsText;
+
+                // 4. Update the ruler
+                updateRuler(syringeVol, units);
+            }
+
+            // --- Event Listeners for "Other" fields ---
+            function setupOtherInputs(radioId, inputId, groupName) {
+                const radio = document.getElementById(radioId);
+                const input = document.getElementById(inputId);
+                
+                // Enable input when "Other" label is clicked
+                // We use the label since the radio is hidden
+                const label = document.querySelector(`label[for="${radioId}"]`);
+                
+                label.addEventListener('click', () => {
+                    radio.checked = true;
+                    input.disabled = false;
+                    input.focus();
+                    calculate();
+                });
+                
+                input.addEventListener('input', () => {
+                    radio.checked = true; // Ensure radio stays checked
+                    calculate();
+                });
+
+                // Disable input when any *other* radio in the group is clicked
+                form.querySelectorAll(`input[name="${groupName}"]:not(#${radioId})`).forEach(r => {
+                    r.addEventListener('click', () => {
+                        input.disabled = true;
+                        input.value = '';
+                        calculate();
+                    });
+                });
+            }
+
+            setupOtherInputs('vial_other_radio', 'vial_other_input', 'vial_quantity');
+            setupOtherInputs('water_other_radio', 'water_other_input', 'water_quantity');
+            setupOtherInputs('dose_other_radio', 'dose_other_input', 'dose_quantity');
+            
+            // --- Listen for any change on the form ---
+            form.addEventListener('change', calculate); // Use 'change' for radios
+
+            // --- Initial calculation on load ---
+            calculate();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peptide Calculator</title>
+    <style>
+        /* --- Basic Setup --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- Calculator Container --- */
+        .peptide-calculator {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px 40px;
+            box-sizing: border-box;
+        }
+
+        /* --- Header --- */
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4a4a4a;
+        }
+
+        .calculator-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #6a5acd;
+            /* Purple color from image */
+            margin: 0;
+        }
+
+        .calculator-header .divider {
+            width: 40px;
+            height: 3px;
+            background-color: #e0e0e0;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Form Styling --- */
+        #peptideForm {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        #peptideForm.form-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+        }
+
+        #peptideForm .options-group-pep {
+            display: grid;
+            gap: 24px;
+        }
+
+        .form-group {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .form-group .option-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .form-group .option_thumb img {
+
+            height: 80px;
+        }
+
+        .form-group legend {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding: 0;
+            color: #333;
+        }
+
+        .option-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-group.vol {
+            display: grid;
+        }
+
+        /* --- Radio Button Styling (to look like buttons) --- */
+        .option-group input[type="radio"] {
+            display: none;
+            /* Hide the actual radio button */
+        }
+
+        .option-group label {
+            padding: 10px 18px;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            background-color: #f9f9f9;
+            color: #555;
+            user-select: none;
+        }
+
+        .option-group input {
+            padding: 10px 18px;
+
+            font-size: 1.1rem;
+        }
+
+        /* Style for the syringe options with images */
+        .syringe-option {
+            display: grid;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            grid-template-columns: auto 1fr;
+        }
+
+        .syringe-option img {
+            width: 100%;
+        }
+
+        /* --- Selected State --- */
+        .option-group input[type="radio"]:checked+label {
+            background-color: #e6f7ff;
+            /* Light blue from image */
+            border-color: #007bff;
+            color: #0056b3;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+        }
+
+        /* --- "Other" Input Field --- */
+        .other-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .other-input {
+            width: 70px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1.1rem;
+        }
+
+        .other-input:disabled {
+            background-color: #f1f1f1;
+            cursor: not-allowed;
+            display: none
+        }
+
+        /* --- Result Area --- */
+        .calculator-result {
+            background-color: #f5f7fa;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-top: 20px;
+        }
+
+        .result-text {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-text span {
+            color: #007bff;
+            font-weight: 700;
+        }
+
+        /* --- Ruler Visual --- */
+        .ruler {
+            position: relative;
+            width: 100%;
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+
+        .ruler-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            /* Will be set by JS */
+            background-color: #007bff;
+            border-radius: 6px;
+            transition: width 0.3s ease-out;
+        }
+
+        .ruler-ticks {
+            position: relative;
+            top: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.8rem;
+        }
+
+        .ruler-ticks span {
+            position: relative;
+            display: inline-block;
+            padding-top: 5px;
+        }
+
+        /* The tick mark line */
+        .ruler-ticks span::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 5px;
+            background-color: #aaa;
+        }
+
+        /* Hide first tick label */
+        .ruler-ticks span:first-child {
+            visibility: hidden;
+        }
+
+
+
+        /* Phones to tablets 767px and below */
+        @media screen and (max-width: 768px) {
+            #peptideForm.form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* Phones 480px and below */
+        @media screen and (max-width: 480px) {
+
+            /* write code here */
+            .form-group .option-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .peptide-calculator {             
+                padding: 30px 10px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="peptide-calculator">
+        <!-- <div class="calculator-header">
+            <h1>PEPTIDE CALCULATOR</h1>
+            <div class="divider"></div>
+        </div> -->
+
+        <form id="peptideForm" class="form-grid">
+            <div class="vol-group">
+                <fieldset class="form-group">
+                    <legend>What is the total volume of your syringe?</legend>
+                    <div class="option-group vol">
+                        <input type="radio" id="syringe_03" name="syringe_volume" value="0.3" checked>
+                        <label for="syringe_03" class="syringe-option">
+                            <p>1.0 ml</p> <img src="/assets/syringe-30-units.png" alt="0.3ml syringe">
+                        </label>
+
+                        <input type="radio" id="syringe_05" name="syringe_volume" value="0.5">
+                        <label for="syringe_05" class="syringe-option">
+                            <p>0.5 ml</p> <img src="/assets/syringe-50-units.png" alt="0.5ml syringe">
+                        </label>
+
+                        <input type="radio" id="syringe_10" name="syringe_volume" value="1.0">
+                        <label for="syringe_10" class="syringe-option">
+                            <p>1.0 ml</p> <img src="/assets/syringe-100-units.png" alt="1.0ml syringe">
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="options-group-pep">
+                <fieldset class="form-group">
+                    <div class="option-grid">
+                        <div class="option_thumb"><img src="/assets/bacteriostatic-water.png" alt=""></div>
+                        <div class="option_picker">
+                            <legend>Select Peptide Vial Quantity</legend>
+                            <div class="option-group">
+                                <input type="radio" id="vial_5" name="vial_quantity" value="5" checked>
+                                <label for="vial_5">5 mg</label>
+
+                                <input type="radio" id="vial_10" name="vial_quantity" value="10">
+                                <label for="vial_10">10 mg</label>
+
+                                <input type="radio" id="vial_15" name="vial_quantity" value="15">
+                                <label for="vial_15">15 mg</label>
+
+                                <div class="other-input-wrapper">
+                                    <input type="radio" id="vial_other_radio" name="vial_quantity" value="other">
+                                    <label for="vial_other_radio">Other</label>
+                                    <input type="number" id="vial_other_input" class="other-input" min="0" step="any"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <div class="option-grid">
+                        <div class="option_thumb"><img src="/assets/bacteriostatic-water.png" alt=""></div>
+                        <div class="option_picker">
+                            <legend>How much bacteriostatic water are you adding?</legend>
+                            <div class="option-group">
+                                <input type="radio" id="water_1" name="water_quantity" value="1" checked>
+                                <label for="water_1">1 ml</label>
+
+                                <input type="radio" id="water_2" name="water_quantity" value="2">
+                                <label for="water_2">2 ml</label>
+
+                                <input type="radio" id="water_3" name="water_quantity" value="3">
+                                <label for="water_3">3 ml</label>
+
+                                <input type="radio" id="water_5" name="water_quantity" value="5">
+                                <label for="water_5">5 ml</label>
+
+                                <div class="other-input-wrapper">
+                                    <input type="radio" id="water_other_radio" name="water_quantity" value="other">
+                                    <label for="water_other_radio">Other</label>
+                                    <input type="number" id="water_other_input" class="other-input" min="0" step="any"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <legend>How much of the Peptide do you want in each dose?</legend>
+                    <div class="option-group">
+                        <input type="radio" id="dose_50" name="dose_quantity" value="50" checked>
+                        <label for="dose_50">50 mcg</label>
+
+                        <input type="radio" id="dose_100" name="dose_quantity" value="100">
+                        <label for="dose_100">100 mcg</label>
+
+                        <input type="radio" id="dose_250" name="dose_quantity" value="250">
+                        <label for="dose_250">250 mcg</label>
+
+                        <input type="radio" id="dose_500" name="dose_quantity" value="500">
+                        <label for="dose_500">500 mcg</label>
+
+                        <div class="other-input-wrapper">
+                            <input type="radio" id="dose_other_radio" name="dose_quantity" value="other">
+                            <label for="dose_other_radio">Other</label>
+                            <input type="number" id="dose_other_input" class="other-input" min="0" step="any" disabled>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+        </form>
+
+        <div class="calculator-result">
+            <div class="result-text">
+                To have a dose of <span id="resultDose">50</span> mcg pull the syringe to <span
+                    id="resultUnits">1</span>
+            </div>
+            <div class="ruler-container">
+                <div class="ruler">
+                    <div class="ruler-progress" id="rulerProgress"></div>
+                </div>
+                <div class="ruler-ticks" id="rulerTicks">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('peptideForm');
+
+            // Result elements
+            const resultDoseEl = document.getElementById('resultDose');
+            const resultUnitsEl = document.getElementById('resultUnits');
+            const rulerProgress = document.getElementById('rulerProgress');
+            const rulerTicks = document.getElementById('rulerTicks');
+
+            // --- Helper function to get value from a radio group ---
+            function getRadioValue(groupName, otherInputId) {
+                const checkedRadio = form.querySelector(`input[name="${groupName}"]:checked`);
+                if (!checkedRadio) return 0;
+
+                if (checkedRadio.value === 'other') {
+                    const otherInput = document.getElementById(otherInputId);
+                    return parseFloat(otherInput.value) || 0;
+                }
+                return parseFloat(checkedRadio.value);
+            }
+
+            // --- Helper function to update ruler ticks ---
+            function updateRuler(syringeVol, units) {
+                let maxUnits = 30; // Default for 0.3ml
+                let tickIncrements = [0, 5, 10, 15, 20, 25, 30];
+
+                if (syringeVol === 0.5) {
+                    maxUnits = 50;
+                    tickIncrements = [0, 10, 20, 30, 40, 50];
+                } else if (syringeVol === 1.0) {
+                    maxUnits = 100;
+                    tickIncrements = [0, 20, 40, 60, 80, 100];
+                }
+
+                // Update ticks
+                rulerTicks.innerHTML = tickIncrements.map(tick => `<span>${tick}</span>`).join('');
+
+                // Update progress bar
+                let percentage = (units / maxUnits) * 100;
+                if (percentage > 100) percentage = 100;
+                if (percentage < 0) percentage = 0;
+
+                rulerProgress.style.width = percentage + '%';
+            }
+
+            // --- Main Calculation Function ---
+            function calculate() {
+                // 1. Get all input values
+                const syringeVol = getRadioValue('syringe_volume');
+                const vial_mg = getRadioValue('vial_quantity', 'vial_other_input');
+                const water_ml = getRadioValue('water_quantity', 'water_other_input');
+                const dose_mcg = getRadioValue('dose_quantity', 'dose_other_input');
+
+                // 2. Perform calculation
+                // Formula: units = (dose_mcg * water_ml) / (vial_mg * 10)
+                // This comes from:
+                // concentration = (vial_mg * 1000) / water_ml   (in mcg/ml)
+                // volume_needed_ml = dose_mcg / concentration
+                // units = volume_needed_ml * 100 (since 100 units = 1 ml)
+
+                let units = 0;
+                if (vial_mg > 0 && water_ml > 0 && dose_mcg > 0) {
+                    units = (dose_mcg * water_ml) / (vial_mg * 10);
+                }
+
+                // 3. Update the result text
+                resultDoseEl.textContent = dose_mcg.toLocaleString();
+                resultUnitsEl.textContent = units.toFixed(1).replace(/\.0$/, ''); // Show 1.5, but 1 (not 1.0)
+
+                // 4. Update the ruler
+                updateRuler(syringeVol, units);
+            }
+
+            // --- Event Listeners for "Other" fields ---
+            function setupOtherInputs(radioId, inputId, groupName) {
+                const radio = document.getElementById(radioId);
+                const input = document.getElementById(inputId);
+
+                // Enable input when "Other" radio is clicked
+                radio.addEventListener('click', () => {
+                    input.disabled = false;
+                    input.focus();
+                });
+
+                // Disable input when any *other* radio in the group is clicked
+                form.querySelectorAll(`input[name="${groupName}"]:not(#${radioId})`).forEach(r => {
+                    r.addEventListener('click', () => {
+                        input.disabled = true;
+                        input.value = '';
+                    });
+                });
+            }
+
+            setupOtherInputs('vial_other_radio', 'vial_other_input', 'vial_quantity');
+            setupOtherInputs('water_other_radio', 'water_other_input', 'water_quantity');
+            setupOtherInputs('dose_other_radio', 'dose_other_input', 'dose_quantity');
+
+            // --- Listen for any change on the form ---
+            form.addEventListener('input', calculate);
+
+            // --- Initial calculation on load ---
+            calculate();
+        });
+    </script>
+
+</body>
+
+</html>
